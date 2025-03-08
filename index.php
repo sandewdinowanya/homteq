@@ -1,11 +1,9 @@
 <?php
 include ("db.php"); //include db.php file to connect to DB
-
 $pagename="make your home smart"; //create and populate variable called $pagename
 echo "<link rel=stylesheet type=text/css href=mystylesheet.css>";
 echo "<title>".$pagename."</title>";
 include ("headfile.html");
-
 echo "<body>";
 echo "<h4>".$pagename."</h4>";
 
@@ -27,8 +25,7 @@ echo "<td style='border: 0px'>";
 echo "<a href=prodbuy.php?u_prod_id=".$arrayp['prodId'].">";
 //display the small image whose name is contained in the array
 echo "<img src=images/".$arrayp['prodPicNameSmall']." height=200 width=200>";
-"</a>";
-include("prodbuy.php");
+echo "</a>";
 echo "</td>";
 echo "<td style='border: 0px'>";
 echo "<p><h5>".$arrayp['prodName']."</h5>"; //display product name as contained in the array
@@ -38,7 +35,7 @@ echo "</td>";
 echo "</tr>";
 }
 echo "</table>";
-
 include ("footer.html");
 echo "</body>";
 ?>
+
