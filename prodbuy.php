@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $pagename='product buy';
 
 echo "<link rel=stylesheet type=text/css href=mystylesheet.css>";
@@ -9,6 +11,8 @@ echo "<title>".$pagename. "</title>";
 echo "<body>";
 
 include('headfile.html');
+
+include("detectlogin.php");
 
 include("db.php");
 
@@ -24,15 +28,13 @@ $SQL="select prodId, prodName, prodPicNameLarge, prodDescripLong, prodPrice, pro
 $exeSQL=mysqli_query($conn, $SQL) or die (mysqli_error($conn));
 echo "<table style='border: 0px'>";
 
-//create an array of records (2 dimensional variable) called $arrayp.
-//populate it with the records retrieved by the SQL query previously executed.
-//Iterate through the array i.e while the end of the array has not been reached, run through it
-while ($arrayp=mysqli_fetch_array($exeSQL))
-{
+$arrayp = mysqli_fetch_array($exeSQL);
+
+echo "<table style='border:0px'>";
 echo "<tr>";
 echo "<td style='border: 0px'>";
 //make the image into an anchor to prodbuy.php and pass the product id by URL (the id from the array)
-echo "<a href=prodbuy.php?u_prod_id=".$arrayp['prodId'].">";
+// echo "<a href=prodbuy.php?u_prod_id=".$arrayp['prodId'].">";
 //display the small image whose name is contained in the array
 echo "<img src=images/".$arrayp['prodPicNameLarge']." height=300 width=300>";
 "</a>";
@@ -42,32 +44,32 @@ echo "<p><h5>".$arrayp['prodName']."</h5><br>"; //display product name as contai
 echo "<p>".$arrayp['prodDescripLong']."</p><br>";
 echo "<p>".$arrayp['prodPrice']."</p><br>";
 echo "<p><b> $".$arrayp['prodQuantity']."</p><br>";
-
-echo "<br><p> Number to Purchased: </p>";
-
-// create form made of one text field and one button for user to enter quantity
-// the value entered in the form will be posted to the basket.php to e processed
+echo "<p>Number to be purchased: </p>";
 echo "<form action=basket.php method=post>";
 // echo "<input type=text name=p_quantity size=5 maxlength=3>";
 echo "<select name=p_quantity>";
 
 for($p=1; $p <= $arrayp['prodQuantity']; $p++){
-    echo "<option value='" .$p. "'>" .$p."</option>";
+    echo "<option value=" .$p. ">" .$p."</option>";
 };
 
 echo "</select>";
-
-echo "<input type=submit name=submitbtn value='ADD TO BASKET' id='submitbtn'>";
-
-// pass the product id to the next page bascket.php as a hidden value
+echo "<input type=submit name='submitbtn' value='ADD TO BASKET' id='submitbtn'>";
+//pass the product id to the next page basket.php as a hidden value
 echo "<input type=hidden name=h_prodid value=".$prodid.">";
 echo "</form>";
 echo "</p>";
-
 echo "</td>";
 echo "</tr>";
-}
 echo "</table>";
+
+// echo "<form action=basket.php method=post>";
+
+// echo "<input type=submit name=submitbtn value='ADD TO BASKET' id='submitbtn'>";
+
+// // pass the product id to the next page bascket.php as a hidden value
+// echo "<input type=hidden name=h_prodid value=".$prodid.">";
+
 
 include('footer.html');
 
